@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تهنئة اللواء وائل حسين برأس السنة الهجرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&family=Cairo:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --indigo:#12142A;
+    --indigo-2:#1A1D3B;
+    --periwinkle:#8B93C4;
+    --periwinkle-soft:#5C6296;
+    --silver:#C9CDD6;
+    --white:#F2F3F8;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  body{
+    direction:rtl;
+    background:
+      radial-gradient(ellipse 70% 45% at 50% 8%, var(--indigo-2) 0%, transparent 60%),
+      var(--indigo);
+    color:var(--white);
+    font-family:'Cairo', sans-serif;
+    font-weight:300;
+    min-height:100vh;
+    overflow:hidden;
+    position:relative;
+  }
+
+  #stars{ position:fixed; inset:0; width:100%; height:100%; z-index:0; }
+
+  .arc{
+    position:absolute;
+    top:-320px;
+    left:50%;
+    transform:translateX(-50%);
+    width:760px;
+    height:760px;
+    border-radius:50%;
+    border:1px dashed rgba(139,147,196,.35);
+    z-index:1;
+    pointer-events:none;
+  }
+
+  .stage{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(28px, 6vw, 72px) 20px;
+  }
+
+  .card{
+    position:relative;
+    width:min(520px, 100%);
+    padding:clamp(44px, 7vw, 64px) clamp(22px, 6vw, 44px) clamp(38px, 6vw, 52px);
+    border:1px solid rgba(201,205,214,.16);
+    text-align:center;
+    opacity:0;
+    animation: card-in 1s ease forwards .2s;
+  }
+
+  .compass{
+    position:relative;
+    width:44px; height:44px;
+    margin:0 auto 22px;
+    opacity:0;
+    animation: rise-in .9s ease forwards .55s;
+  }
+  .compass i{
+    position:absolute; top:50%; left:50%;
+    width:1px; height:44px;
+    margin:-22px 0 0 0;
+    background:linear-gradient(var(--periwinkle), transparent 45%, transparent 55%, var(--periwinkle));
+  }
+  .compass i:nth-child(2){ transform:rotate(90deg); }
+  .compass::after{
+    content:"";
+    position:absolute; top:50%; left:50%;
+    width:6px; height:6px; margin:-3px 0 0 -3px;
+    border-radius:50%; background:var(--silver);
+    box-shadow:0 0 10px 2px rgba(201,205,214,.6);
+  }
+
+  .eyebrow{
+    margin:0 0 12px; font-size:12.5px; letter-spacing:.22em;
+    color:var(--periwinkle); font-weight:500;
+    opacity:0; animation: rise-in .8s ease forwards .7s;
+  }
+
+  .title{
+    font-family:'El Messiri', serif;
+    font-weight:700;
+    font-size:clamp(30px, 6.4vw, 42px);
+    line-height:1.35;
+    margin:0 0 14px;
+    color:var(--white);
+    text-wrap:balance;
+    opacity:0;
+    animation: rise-in .9s ease forwards .85s;
+  }
+
+  .subtitle{
+    margin:0 0 30px;
+    font-size:clamp(14px, 2.4vw, 15.5px);
+    color:var(--silver);
+    font-weight:300;
+    opacity:0;
+    animation: rise-in .8s ease forwards 1.05s;
+  }
+
+  .hairline{
+    width:40px; height:1px;
+    background:var(--periwinkle-soft);
+    margin:26px auto;
+    opacity:0;
+    animation: rise-in .8s ease forwards 1.15s;
+  }
+
+  .greeting{ opacity:0; animation: rise-in .9s ease forwards 1.25s; }
+  .to-label{ margin:0 0 6px; font-size:13px; color:var(--periwinkle); font-weight:400; }
+  .to-name{
+    margin:0 0 6px; font-family:'El Messiri', serif; font-weight:600;
+    font-size:clamp(21px, 4.6vw, 26px); color:var(--white);
+  }
+  .to-wish{ margin:0 0 22px; font-size:12.5px; color:var(--silver); }
+
+  .body-text{
+    margin:0 auto; max-width:44ch;
+    font-size:clamp(14.5px, 2.6vw, 16px);
+    line-height:2.15; color:var(--silver); font-weight:300;
+  }
+
+  .signature{ margin-top:6px; opacity:0; animation: rise-in .9s ease forwards 1.45s; }
+  .sig-line{ margin:0 0 10px; font-size:12.5px; color:var(--periwinkle); }
+  .sig-name{
+    margin:0; font-family:'El Messiri', serif; font-weight:600;
+    font-size:clamp(19px, 4vw, 24px); color:var(--white);
+  }
+
+  @keyframes rise-in{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes card-in{ from{ opacity:0; } to{ opacity:1; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .card, .compass, .eyebrow, .title, .subtitle, .hairline, .greeting, .signature{
+      animation:none !important; opacity:1 !important; transform:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="arc" aria-hidden="true"></div>
+
+<main class="stage">
+  <section class="card">
+    <div class="compass" aria-hidden="true"><i></i><i></i></div>
+
+    <p class="eyebrow">بمناسبة</p>
+    <h1 class="title">رأس السنة الهجرية</h1>
+    <p class="subtitle">عام جديد يحمل معه الخير والتوفيق</p>
+
+    <div class="hairline"></div>
+
+    <div class="greeting">
+      <p class="to-label">إلى صاحب السعادة</p>
+      <p class="to-name">اللواء / وائل حسين</p>
+      <p class="to-wish">أدام الله عليه التوفيق والسداد</p>
+      <p class="body-text">
+        كل عام وسيادتكم بخير، مع هجرة العام واستقبال بداية جديدة،
+        نسأل الله أن يجعل هذا العام عام خير وبركة وتوفيق عليكم
+        وعلى أسرتكم الكريمة، وأن يحفظ مصرنا الحبيبة ويديم عليها
+        الأمن والازدهار.
+      </p>
+    </div>
+
+    <div class="hairline"></div>
+
+    <div class="signature">
+      <p class="sig-line">تهنئة خالصة من مقدّر فضلكم</p>
+      <p class="sig-name">مقدم / صابر</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var canvas = document.getElementById('stars');
+  var ctx = canvas.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stars = [];
+  var w, h, dpr;
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+  }
+
+  function seed(){
+    var count = Math.round((w * h) / 7000);
+    stars = [];
+    for (var i = 0; i < count; i++){
+      stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.2 + 0.25,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.3 + Math.random() * 0.6
+      });
+    }
+  }
+
+  function draw(t){
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < stars.length; i++){
+      var s = stars[i];
+      var tw = reduced ? 0.6 : 0.4 + 0.5 * Math.sin(s.phase + t * 0.0005 * s.speed);
+      ctx.globalAlpha = 0.2 + tw * 0.55;
+      ctx.fillStyle = '#C9CDD6';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (!reduced) requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw(0);
+})();
+</script>
+</body>
+</html>
