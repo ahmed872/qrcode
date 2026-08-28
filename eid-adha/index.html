@@ -38,6 +38,27 @@
 
   #dusk{ position:fixed; inset:0; width:100%; height:100%; z-index:0; }
 
+  .grain{
+    position:fixed; inset:0; width:100%; height:100%; z-index:1;
+    pointer-events:none;
+    opacity:.05;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .rays{
+    position:absolute;
+    bottom:-10%; left:50%;
+    width:1000px; height:1000px;
+    margin:0 0 0 -500px;
+    z-index:1;
+    pointer-events:none;
+    background:repeating-conic-gradient(rgba(201,162,78,.06) 0deg 2deg, transparent 2deg 18deg);
+    -webkit-mask:radial-gradient(circle, #000 0%, transparent 55%);
+    mask:radial-gradient(circle, #000 0%, transparent 55%);
+    animation: rays-spin 150s linear infinite;
+  }
+
   .stage{
     position:relative;
     z-index:1;
@@ -55,12 +76,23 @@
     background:linear-gradient(180deg, rgba(239,230,216,.04), transparent 20%), var(--charcoal-2);
     border:1px solid rgba(201,162,78,.4);
     box-shadow:
-      0 30px 80px -20px rgba(0,0,0,.6),
-      inset 0 0 60px rgba(201,162,78,.04);
+      0 60px 130px -30px rgba(0,0,0,.8),
+      0 18px 46px -20px rgba(201,162,78,.18),
+      inset 0 0 70px rgba(201,162,78,.05);
     text-align:center;
     opacity:0;
-    animation: card-in .9s ease forwards .15s;
+    animation: card-in 1s ease forwards .15s, glow-pulse 5.5s ease-in-out infinite 1.3s;
     overflow:hidden;
+  }
+  .card::after{
+    content:"";
+    position:absolute;
+    top:0; bottom:0; left:-60%;
+    width:34%;
+    background:linear-gradient(100deg, transparent, rgba(231,201,137,.16), transparent);
+    transform:skewX(-18deg);
+    animation: sheen 2.4s ease forwards 1.2s;
+    z-index:1;
   }
 
   .band{
@@ -95,6 +127,7 @@
     width:24px; height:24px; border-radius:50%;
     background:radial-gradient(circle at 35% 30%, var(--sand-light), var(--gold) 70%);
     box-shadow:0 0 22px 4px rgba(201,162,78,.45);
+    animation: sun-breathe 4.5s ease-in-out infinite;
   }
   .peaks .peak{ position:absolute; bottom:0; width:0; height:0; }
   .peaks .peak.p1{ left:2px; border-left:26px solid transparent; border-right:26px solid transparent; border-bottom:28px solid var(--terracotta); opacity:.7; }
@@ -163,17 +196,40 @@
 
   @keyframes rise-in{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
   @keyframes card-in{ from{ opacity:0; transform:translateY(24px) scale(.98); } to{ opacity:1; transform:translateY(0) scale(1); } }
+  @keyframes sun-breathe{ 0%,100%{ box-shadow:0 0 22px 4px rgba(201,162,78,.45); } 50%{ box-shadow:0 0 32px 8px rgba(201,162,78,.65); } }
+  .vignette{
+    position:fixed; inset:0; z-index:3; pointer-events:none;
+    background:radial-gradient(ellipse 78% 68% at 50% 50%, transparent 50%, rgba(0,0,0,.45) 100%);
+  }
+  .frame{ position:fixed; inset:16px; z-index:5; pointer-events:none; }
+  .frame i{ position:absolute; width:26px; height:26px; }
+  .frame i.tl{ top:0; left:0; border-top:1px solid rgba(201,162,78,.4); border-left:1px solid rgba(201,162,78,.4); }
+  .frame i.tr{ top:0; right:0; border-top:1px solid rgba(201,162,78,.4); border-right:1px solid rgba(201,162,78,.4); }
+  .frame i.bl{ bottom:0; left:0; border-bottom:1px solid rgba(201,162,78,.4); border-left:1px solid rgba(201,162,78,.4); }
+  .frame i.br{ bottom:0; right:0; border-bottom:1px solid rgba(201,162,78,.4); border-right:1px solid rgba(201,162,78,.4); }
+
+  @keyframes rays-spin{ to{ transform:rotate(360deg); } }
+  @keyframes sheen{ from{ left:-60%; } to{ left:130%; } }
+  @keyframes glow-pulse{
+    0%,100%{ box-shadow:0 60px 130px -30px rgba(0,0,0,.8), 0 18px 46px -20px rgba(201,162,78,.18), inset 0 0 70px rgba(201,162,78,.05); }
+    50%{ box-shadow:0 60px 130px -30px rgba(0,0,0,.8), 0 18px 46px -20px rgba(201,162,78,.3), inset 0 0 80px rgba(201,162,78,.09); }
+  }
 
   @media (prefers-reduced-motion: reduce){
-    .card, .peaks, .eyebrow, .title, .subtitle, .divider, .greeting, .signature{
+    .card, .card::after, .peaks, .peaks .sun, .eyebrow, .title, .subtitle, .divider, .greeting, .signature{
       animation:none !important; opacity:1 !important; transform:none !important;
     }
+    .rays{ animation:none !important; }
   }
 </style>
 </head>
 <body>
 
 <canvas id="dusk"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="rays" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="frame" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></div>
 
 <main class="stage">
   <section class="card">
